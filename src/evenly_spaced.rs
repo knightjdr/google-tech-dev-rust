@@ -13,16 +13,26 @@ pub fn evenly_spaced(a: i32, b: i32, c: i32) -> bool {
 
 #[cfg(test)]
 mod tests {
-  mod evenly_spaced{
+  mod evenly_spaced {
+    use rstest::rstest;
     use crate::evenly_spaced::evenly_spaced;
-    #[test]
-    fn evenly_spaced_numbers_true() {
-      assert_eq!(evenly_spaced(2, 4, 6), true);
-    }
-  
-    #[test]
-    fn unevenly_spaced_numbers_false() {
-      assert_eq!(evenly_spaced(2, 4, 7), false);
+    #[rstest]
+    #[case(2, 4, 6, true)]
+    #[case(4, 6, 2, true)]
+    #[case(4, 6, 3, false)]
+    #[case(6, 2, 4, true)]
+    #[case(6, 2, 8, false)]
+    #[case(2, 2, 2, true)]
+    #[case(2, 2, 3, false)]
+    #[case(9, 10, 11, true)]
+    #[case(10, 9, 11, true)]
+    #[case(10, 9, 9, false)]
+    #[case(2, 4, 4, false)]
+    #[case(2, 2, 4, false)]
+    #[case(3, 6, 12, false)]
+    #[case(12, 3, 6, false)]
+    fn evenly_spaced_test(#[case] a: i32, #[case] b: i32, #[case] c: i32, #[case] expected: bool) {
+      assert_eq!(evenly_spaced(a, b, c), expected);
     }
   }
 }

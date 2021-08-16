@@ -53,7 +53,7 @@ mod tests {
     #[case(3, 1, 8, true)]
     #[case(3, 2, 10, true)]
     fn make_bricks_test(#[case] small_bricks_available: u32, #[case] big_bricks_available: u32, #[case] goal: u32, #[case] expected: bool) {
-      assert_eq!(make_bricks(small_bricks_available, big_bricks_available, goal), expected, )
+      assert_eq!(make_bricks(small_bricks_available, big_bricks_available, goal), expected)
     }
   }
 }

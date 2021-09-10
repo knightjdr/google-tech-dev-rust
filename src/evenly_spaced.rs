@@ -14,25 +14,35 @@ pub fn evenly_spaced(a: i32, b: i32, c: i32) -> bool {
 #[cfg(test)]
 mod tests {
   mod evenly_spaced {
-    use rstest::rstest;
     use crate::evenly_spaced::evenly_spaced;
-    #[rstest]
-    #[case(2, 4, 6, true)]
-    #[case(4, 6, 2, true)]
-    #[case(4, 6, 3, false)]
-    #[case(6, 2, 4, true)]
-    #[case(6, 2, 8, false)]
-    #[case(2, 2, 2, true)]
-    #[case(2, 2, 3, false)]
-    #[case(9, 10, 11, true)]
-    #[case(10, 9, 11, true)]
-    #[case(10, 9, 9, false)]
-    #[case(2, 4, 4, false)]
-    #[case(2, 2, 4, false)]
-    #[case(3, 6, 12, false)]
-    #[case(12, 3, 6, false)]
-    fn evenly_spaced_test(#[case] a: i32, #[case] b: i32, #[case] c: i32, #[case] expected: bool) {
-      assert_eq!(evenly_spaced(a, b, c), expected);
+
+    macro_rules! evenly_spaced_tests {
+      ($($name:ident: $value:expr,)*) => {
+      $(
+        #[test]
+        fn $name() {
+            let (a, b, c, expected) = $value;
+            assert_eq!(expected, evenly_spaced(a, b, c));
+        }
+      )*
+      }
+    }
+
+    evenly_spaced_tests! {
+      case01: (2, 4, 6, true),
+      case02: (4, 6, 2, true),
+      case03: (4, 6, 3, false),
+      case04: (6, 2, 4, true),
+      case05: (6, 2, 8, false),
+      case06: (2, 2, 2, true),
+      case07: (2, 2, 3, false),
+      case08: (9, 10, 11, true),
+      case09: (10, 9, 11, true),
+      case10: (10, 9, 9, false),
+      case11: (2, 4, 4, false),
+      case12: (2, 2, 4, false),
+      case13: (3, 6, 12, false),
+      case14: (12, 3, 6, false),
     }
   }
 }

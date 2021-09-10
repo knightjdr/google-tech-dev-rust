@@ -18,42 +18,52 @@ pub fn make_bricks(small_bricks_available: u32, big_bricks_available: u32, goal:
 #[cfg(test)]
 mod tests {
   mod make_bricks {
-    use rstest::rstest;
     use crate::make_bricks::make_bricks;
-    #[rstest]
-    #[case(3, 1, 8, true)]
-    #[case(3, 1, 9, false)]
-    #[case(3, 2, 10, true)]
-    #[case(3, 2, 8, true)]
-    #[case(3, 2, 9, false)]
-    #[case(6, 1, 11, true)]	
-    #[case(6, 0, 11, false)]	
-    #[case(1, 4, 11, true)]	
-    #[case(0, 3, 10, true)]	
-    #[case(1, 4, 12, false)]	
-    #[case(3, 1, 7, true)]	
-    #[case(1, 1, 7, false)]	
-    #[case(2, 1, 7, true)]	
-    #[case(7, 1, 11, true)]	
-    #[case(7, 1, 8, true)]	
-    #[case(7, 1, 13, false)]	
-    #[case(43, 1, 46, true)]	
-    #[case(40, 1, 46, false)]	
-    #[case(40, 2, 47, true)]	
-    #[case(40, 2, 50, true)]	
-    #[case(40, 2, 52, false)]	
-    #[case(22, 2, 33, false)]	
-    #[case(0, 2, 10, true)]	
-    #[case(1000000, 1000, 1000100, true)]	
-    #[case(2, 1000000, 100003, false)]	
-    #[case(20, 0, 19, true)]	
-    #[case(20, 0, 21, false)]	
-    #[case(20, 4, 51, false)]	
-    #[case(20, 4, 39, true)]
-    #[case(3, 1, 8, true)]
-    #[case(3, 2, 10, true)]
-    fn make_bricks_test(#[case] small_bricks_available: u32, #[case] big_bricks_available: u32, #[case] goal: u32, #[case] expected: bool) {
-      assert_eq!(make_bricks(small_bricks_available, big_bricks_available, goal), expected)
+
+    macro_rules! make_bricks_tests {
+      ($($name:ident: $value:expr,)*) => {
+      $(
+        #[test]
+        fn $name() {
+            let (small, big, goal, expected) = $value;
+            assert_eq!(expected, make_bricks(small, big, goal));
+        }
+      )*
+      }
+    }
+
+    make_bricks_tests! {
+      case01: (3, 1, 8, true),
+      case02: (3, 1, 9, false),
+      case03: (3, 2, 10, true),
+      case04: (3, 2, 8, true),
+      case05: (3, 2, 9, false),
+      case06: (6, 1, 11, true),	
+      case07: (6, 0, 11, false),	
+      case08: (1, 4, 11, true),	
+      case09: (0, 3, 10, true),	
+      case10: (1, 4, 12, false),	
+      case11: (3, 1, 7, true),	
+      case12: (1, 1, 7, false),	
+      case13: (2, 1, 7, true),	
+      case14: (7, 1, 11, true),	
+      case15: (7, 1, 8, true),	
+      case16: (7, 1, 13, false),	
+      case17: (43, 1, 46, true),	
+      case18: (40, 1, 46, false),	
+      case19: (40, 2, 47, true),	
+      case20: (40, 2, 50, true),	
+      case21: (40, 2, 52, false),	
+      case22: (22, 2, 33, false),	
+      case23: (0, 2, 10, true),	
+      case24: (1000000, 1000, 1000100, true),	
+      case25: (2, 1000000, 100003, false),	
+      case26: (20, 0, 19, true),	
+      case27: (20, 0, 21, false),	
+      case28: (20, 4, 51, false),	
+      case29: (20, 4, 39, true),
+      case30: (3, 1, 8, true),
+      case31: (3, 2, 10, true),
     }
   }
 }

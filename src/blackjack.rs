@@ -15,26 +15,37 @@ pub fn blackjack(x: u32, y: u32) -> u32 {
 #[cfg(test)]
 mod tests {
   mod blackjack {
-    use rstest::rstest;
     use crate::blackjack::blackjack;
-    #[rstest]
-    #[case(19, 21, 21)]
-    #[case(21, 19, 21)]
-    #[case(19, 22, 19)]
-    #[case(22, 19, 19)]
-    #[case(22, 50, 0)]
-    #[case(22, 22, 0)]
-    #[case(33, 1, 1)]
-    #[case(1, 2, 2)]
-    #[case(34, 33, 0)]
-    #[case(17, 19, 19)]
-    #[case(18, 17, 18)]
-    #[case(16, 23, 16)]
-    #[case(3, 4, 4)]
-    #[case(3, 2, 3)]
-    #[case(21, 20, 21)]
-    fn blackjack_test(#[case] x: u32, #[case] y: u32, #[case] expected: u32) {
-      assert_eq!(blackjack(x, y), expected)
+
+    macro_rules! blackjack_tests {
+      ($($name:ident: $value:expr,)*) => {
+      $(
+        #[test]
+        fn $name() {
+            let (x, y, expected) = $value;
+            assert_eq!(expected, blackjack(x, y));
+        }
+      )*
+      }
+    }
+
+    blackjack_tests! {
+      case01: (19, 21, 21),
+      case02: (19, 21, 21),
+      case03: (21, 19, 21),
+      case04: (19, 22, 19),
+      case05: (22, 19, 19),
+      case06: (22, 50, 0),
+      case07: (22, 22, 0),
+      case08: (33, 1, 1),
+      case09: (1, 2, 2),
+      case10: (34, 33, 0),
+      case11: (17, 19, 19),
+      case12: (18, 17, 18),
+      case13: (16, 23, 16),
+      case14: (3, 4, 4),
+      case15: (3, 2, 3),
+      case16: (21, 20, 21),
     }
   }
 }
